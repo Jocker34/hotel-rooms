@@ -9,7 +9,7 @@
 .oldPrice {
   display: inline-block;
   text-decoration: line-through;
-  color: gray; /* Optional: change the color of the old price */
+  color: gray;
 }
 
 .carousel {
@@ -51,7 +51,7 @@
 }
 
 .blur {
-  filter: blur(4px); /* Apply blur effect */
+  filter: blur(4px); 
 }
 
 .overlay {
