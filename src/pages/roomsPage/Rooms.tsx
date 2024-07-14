@@ -18,7 +18,7 @@ const chunk = <T,>(array: T[], size: number): T[][] => {
 export const Rooms: React.FC = () => {
   const { data, isPending, isError } = useRooms();
   const [activePage, setPage] = useState(1);
-  const [sortCriteria, setSortCriteria] = useState<string>('name-asc');
+  const [sortCriteria, setSortCriteria] = useState<string>('price-asc');
 
   const handleSortChange = (value: string | null) => {
     value && setSortCriteria(value);
