@@ -11,4 +11,5 @@ export const roomSchema = z.object({
 
 export const roomsSchema = z.array(roomSchema);
 
+export type Room = z.infer<typeof roomSchema>;
 export type Rooms = z.infer<typeof roomsSchema>;
