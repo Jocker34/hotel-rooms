@@ -1,13 +1,11 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { HomePage } from './pages/Home.page';
+import { RoomsPage } from './pages/Rooms.page';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <HomePage />,
+    element: <RoomsPage />,
   },
 ]);
 
-export function Router() {
-  return <RouterProvider router={router} />;
-}
+export const Router = () => <RouterProvider router={router} />;
