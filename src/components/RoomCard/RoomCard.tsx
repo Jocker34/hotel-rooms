@@ -46,7 +46,7 @@ export const RoomCard: React.FC<RoomCardProps> = ({ id, name, price }) => {
       if (data) {
         setcheckAvailability(true);
         setStatus(data.availabilityStatus);
-        setNewPrice(data.price.value);
+        if (data.price !== null) { setNewPrice(data.price.value); }
         setRoomData({
           id,
           name,
