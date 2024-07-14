@@ -1,0 +1,71 @@
+.price {
+  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+}
+
+.newPrice {
+  color: red;
+}
+
+.oldPrice {
+  display: inline-block;
+  text-decoration: line-through;
+  color: gray; /* Optional: change the color of the old price */
+}
+
+.carousel {
+  &:hover {
+    .carouselControls {
+      opacity: 1;
+    }
+  }
+}
+
+.carouselControls {
+  transition: opacity 150ms ease;
+  opacity: 0;
+}
+
+.carouselIndicator {
+  width: rem(4px);
+  height: rem(4px);
+  transition: width 250ms ease;
+
+  &[data-active] {
+    width: rem(16px);
+  }
+}
+
+.badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1;
+}
+
+.currencyCode {
+  margin-right: 10px;
+}
+
+.content {
+  transition: filter 0.3s;
+}
+
+.blur {
+  filter: blur(4px); /* Apply blur effect */
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  color: white;
+  text-align: center;
+}
