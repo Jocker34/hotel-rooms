@@ -1,4 +1,4 @@
-import { Image, Card, Text, Group, Button, Badge, Tooltip } from '@mantine/core';
+import { Image, Card, Text, Group, Button, Badge, Tooltip, Loader } from '@mantine/core';
 import { Carousel } from '@mantine/carousel';
 import { useState } from 'react';
 import classes from './RoomCard.module.css';
@@ -38,7 +38,7 @@ export const RoomCard: React.FC<RoomCardProps> = ({ id, name, price }) => {
   const [status, setStatus] = useState<status>('onRequest');
   const [newPrice, setNewPrice] = useState<number | null>(null);
   const [roomData, setRoomData] = useState<RoomCardProps | null>(null);
-  const { refetch, isError } = useRoom(id, false);
+  const { refetch, isError, isLoading } = useRoom(id, false);
 
   const handleCheckAvailability = async () => {
     try {
@@ -141,7 +141,7 @@ export const RoomCard: React.FC<RoomCardProps> = ({ id, name, price }) => {
               Check
             </Button>
           )}
-          {checkAvailability && (
+          {isLoading ? <Loader color="blue" /> : checkAvailability && (
             <Tooltip
               label="Room is not available"
               withArrow
