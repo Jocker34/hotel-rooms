@@ -1,13 +1,11 @@
 import { useState } from 'react';
-import { Container, Group, Burger } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
+import { Container, Group } from '@mantine/core';
 import { MantineLogo } from '@mantinex/mantine-logo';
 import classes from './Header.module.css';
 
 const links = [{ link: '/rooms', label: 'Rooms' }];
 
 export const Header = () => {
-  const [opened, { toggle }] = useDisclosure(false);
   const [active, setActive] = useState(links[0].link);
 
   const items = links.map((link) => (
@@ -32,8 +30,6 @@ export const Header = () => {
         <Group gap={5} visibleFrom="xs">
           {items}
         </Group>
-
-        <Burger opened={opened} onClick={toggle} hiddenFrom="xs" size="sm" />
       </Container>
     </header>
   );

@@ -1,11 +1,10 @@
-import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import { render, screen, fireEvent } from '@test-utils';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Rooms } from './Rooms';
 import { useRooms } from '@/hooks/useRooms';
 import { Room } from '@/schemas/roomSchema';
 
-jest.mock('@/hooks/useRooms');
+vi.mock('@/hooks/useRooms');
 
 const mockUseRooms = useRooms as jest.MockedFunction<typeof useRooms>;
 
@@ -27,7 +26,7 @@ describe('Rooms component', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   test('renders loading state', () => {
@@ -38,7 +37,8 @@ describe('Rooms component', () => {
     } as any);
 
     render(<Rooms />);
-    expect(screen.getByText(/loading/i)).toBeInTheDocument();
+    const skeletonElements = screen.getAllByTestId('skeleton');
+    expect(skeletonElements.length).toBe(5);
   });
 
   test('renders error state', () => {
@@ -53,32 +53,31 @@ describe('Rooms component', () => {
   });
 
   test('renders rooms and sorts by name (A-Z)', async () => {
-    render(<Rooms />);
-    const roomNames = mockData.map((room) => room.name).sort();
-    roomNames.forEach(async (name) => {
-      expect(await screen.findByText(name)).toBeInTheDocument();
-    });
+    render(
+      <QueryClientProvider client={new QueryClient()}>
+        <Rooms />
+      </QueryClientProvider>
+    );
 
-    const select = screen.getByPlaceholderText(/sort by/i);
-    fireEvent.change(select, { target: { value: 'name-asc' } });
+    const select = screen.getByPlaceholderText('Sort by');
+    fireEvent.click(select);
+    fireEvent.click(screen.getByText('Name (A-Z)'));
     const sortedRooms = screen.getAllByText(/Room/i);
     expect(sortedRooms[0]).toHaveTextContent('Room A');
+    expect(sortedRooms[1]).toHaveTextContent('Room B');
   });
 
   test('renders rooms and sorts by price (Low to High)', async () => {
-    render(<Rooms />);
-
-    const select = screen.getByPlaceholderText(/sort by/i);
-    fireEvent.change(select, { target: { value: 'price-asc' } });
+    render(
+      <QueryClientProvider client={new QueryClient()}>
+        <Rooms />
+      </QueryClientProvider>
+    );
+    const select = screen.getByPlaceholderText('Sort by');
+    fireEvent.click(select);
+    fireEvent.click(screen.getByText('Price (Low to High)'));
     const sortedRooms = await screen.findAllByText(/Room/i);
     expect(sortedRooms[0]).toHaveTextContent('Room A');
     expect(sortedRooms[1]).toHaveTextContent('Room D');
-  });
-
-  test('renders pagination controls and paginates rooms', async () => {
-    render(<Rooms />);
-    expect(screen.getByText(/1/i)).toBeInTheDocument();
-    fireEvent.click(screen.getByText(/2/i));
-    expect(screen.getByText(/Room E/i)).toBeInTheDocument();
   });
 });

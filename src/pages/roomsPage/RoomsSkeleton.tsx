@@ -1,7 +1,7 @@
 import { Grid, Skeleton, Container } from '@mantine/core';
 
-const card = <Skeleton height={250} radius="md" />;
-const pagination = <Skeleton height={100} radius="md" />;
+const card = <Skeleton height={250} radius="md" data-testid="skeleton" />;
+const pagination = <Skeleton height={100} radius="md" data-testid="skeleton" />;
 
 export const RoomsSkeleton = () => (
   <Container my="xl">

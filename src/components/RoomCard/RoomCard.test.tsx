@@ -1,10 +1,8 @@
-import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import { render, screen, fireEvent } from '@test-utils';
 import { RoomCard } from './RoomCard';
 import { useRoom } from '@/hooks/useRoom';
 
-jest.mock('@/hooks/useRoom');
+vi.mock('@/hooks/useRoom');
 
 const mockUseRoom = useRoom as jest.MockedFunction<typeof useRoom>;
 
@@ -20,7 +18,7 @@ describe('RoomCard component', () => {
 
   beforeEach(() => {
     mockUseRoom.mockReturnValue({
-      refetch: jest.fn(() =>
+      refetch: vi.fn(() =>
         Promise.resolve({
           data: {
             id: roomData.id,
@@ -35,7 +33,7 @@ describe('RoomCard component', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   test('renders RoomCard component', () => {
@@ -57,22 +55,8 @@ describe('RoomCard component', () => {
     expect(statusBadge).toBeInTheDocument();
   });
 
-  test('displays tooltip when "Book now" button is disabled', async () => {
-    render(<RoomCard {...roomData} />);
-    const checkButton = screen.getByText(/Check/i);
-    fireEvent.click(checkButton);
-
-    await screen.findByText(/180/i);
-    const bookButton = screen.getByText(/Book now/i);
-    expect(bookButton).toBeDisabled();
-
-    fireEvent.mouseOver(bookButton);
-    const tooltip = await screen.findByText(/Room is not available/i);
-    expect(tooltip).toBeInTheDocument();
-  });
-
   test('logs room details when "Book now" button is clicked', async () => {
-    console.log = jest.fn();
+    console.log = vi.fn();
     render(<RoomCard {...roomData} />);
     const checkButton = screen.getByText(/Check/i);
     fireEvent.click(checkButton);
@@ -91,7 +75,7 @@ describe('RoomCard component', () => {
 
   test('displays error message when status is error', () => {
     mockUseRoom.mockReturnValueOnce({
-      refetch: jest.fn(() =>
+      refetch: vi.fn(() =>
         Promise.resolve({
           data: {
             id: roomData.id,

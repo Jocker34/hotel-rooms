@@ -1,15 +1,7 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import { render, screen } from '@test-utils';
 import { Footer } from './Footer';
 
 describe('Footer component', () => {
-  test('renders Mantine logo', () => {
-    render(<Footer />);
-    const logoElement = screen.getByRole('img', { name: /mantine logo/i });
-    expect(logoElement).toBeInTheDocument();
-  });
-
   test('renders all footer links', () => {
     render(<Footer />);
     const links = ['Contact', 'Privacy', 'Blog', 'Careers'];

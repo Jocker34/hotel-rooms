@@ -54,6 +54,7 @@ export const Rooms: React.FC = () => {
           ]}
           placeholder="Sort by"
           mb="md"
+          data-testid="select"
         />
       </Grid>
       <Grid gutter="md">{items}</Grid>
